@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foodie - Online Food Delivery System</title>
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- React 18, ReactDOM 18 & Babel Standalone CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+</head>
+<body>
+
+  <!-- Root container for React App -->
+  <div id="root">
+    <div style="font-family: Arial, sans-serif; text-align: center; padding: 60px 20px; color: #0a3d62;">
+      <h2>Loading Foodie App... 🍔</h2>
+      <p style="color: #666; margin-top: 10px; font-size: 14px;">
+        Starting React components. Please wait a moment...
+      </p>
+    </div>
+  </div>
+
+  <!-- Main React App JSX Code -->
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    // API base URL helper (supports both Live Server and localhost:5000)
+    const API_BASE = window.location.origin.includes(":5000") ? "" : "http://localhost:5000";
+
+    // Expanded backup foods list with 18 items across categories
+    const backupFoods = [
+      { id: 1, name: "Chicken Biryani", price: 180, rating: 4.5, time: "30 min", category: "Biryani", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500" },
+      { id: 2, name: "Mutton Biryani", price: 260, rating: 4.7, time: "35 min", category: "Biryani", img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500" },
+      { id: 3, name: "Veg Supreme Pizza", price: 299, rating: 4.2, time: "25 min", category: "Fast Food", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500" },
+      { id: 4, name: "Chicken Cheese Pizza", price: 349, rating: 4.6, time: "25 min", category: "Fast Food", img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500" },
+      { id: 5, name: "Crispy Burger Combo", price: 149, rating: 4.0, time: "20 min", category: "Fast Food", img: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500" },
+      { id: 6, name: "Masala Dosa", price: 99, rating: 4.6, time: "15 min", category: "South Indian", img: "https://d2j6dbq0eux0bg.cloudfront.net/images/83570054/3416107352.jpg" },
+      { id: 7, name: "Idli", price: 65, rating: 4.5, time: "15 min", category: "South Indian", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500" },
+      { id: 8, name: "Chicken Samosa(3 pcs)", price: 90, rating: 4.4, time: "20 min", category: "South Indian", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500" },
+      { id: 9, name: "Crispy Fried Chicken", price: 249, rating: 4.4, time: "30 min", category: "Fast Food", img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=500" },
+      { id: 10, name: "Chicken Shawarma Roll", price: 110, rating: 4.5, time: "15 min", category: "Fast Food", img: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=500" },
+      { id: 11, name: "Paneer Butter Masala", price: 160, rating: 4.3, time: "25 min", category: "Meals", img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500" },
+      { id: 12, name: "tandoori (4 pcs)", price: 240, rating: 4.2, time: "15 min", category: "Meals", img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=500" },
+      { id: 13, name: "Chicken Fried Rice", price: 170, rating: 4.3, time: "20 min", category: "Chinese", img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500" },
+      { id: 14, name: "Veg Hakka Noodles", price: 140, rating: 4.1, time: "20 min", category: "Chinese", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500" },
+      { id: 15, name: "Chocolate Truffle Cake", price: 199, rating: 4.8, time: "10 min", category: "Desserts", img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500" },
+      { id: 16, name: "Hot Gulab Jamun (3 pcs)", price: 60, rating: 4.7, time: "10 min", category: "Desserts", img: "https://images..com/photo-1601050690187-24876b3346b9?w=500" },
+      { id: 17, name: "Cold Coffee with Ice Cream", price: 85, rating: 4.4, time: "10 min", category: "Beverages", img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=500" },
+      { id: 18, name: "Chocolate Milkshake", price: 90, rating: 4.6, time: "10 min", category: "Beverages", img: "https://images.unsplash.com/photo-1553787499-6f9133860278?w=500" }
+    ];
+
+    function App() {
+      // page navigation state: "login", "admin-login", "home", "checkout", "success", "admin"
+      const [page, setPage] = useState("login");
+
+      // customer auth state
+      const [email, setEmail] = useState("");
+      const [password, setPassword] = useState("");
+      const [userName, setUserName] = useState("");
+
+      // separate admin auth state
+      const [adminUser, setAdminUser] = useState("");
+      const [adminPass, setAdminPass] = useState("");
+      const [isAdmin, setIsAdmin] = useState(false);
+
+      // foods and cart states
+      const [foodList, setFoodList] = useState(backupFoods);
+      const [cart, setCart] = useState([]);
+      const [search, setSearch] = useState("");
+      const [selectedCategory, setSelectedCategory] = useState("All");
+
+      // checkout form fields
+      const [custName, setCustName] = useState("");
+      const [phone, setPhone] = useState("");
+      const [address, setAddress] = useState("");
+      const [pincode, setPincode] = useState("");
+      const [payment, setPayment] = useState("Cash on Delivery");
+      const [orderId, setOrderId] = useState("");
+
+      // admin orders state (stored both locally and synced with backend)
+      const [adminOrders, setAdminOrders] = useState([]);
+
+      // backend API la irunthu orders load panrom
+      const loadBackendOrders = () => {
+        fetch(`${API_BASE}/api/orders`)
+          .then(res => res.json())
+          .then(data => {
+            if (Array.isArray(data)) {
+              setAdminOrders(data);
+            }
+          })
+          .catch(err => {
+            console.log("Backend offline for orders, keeping local state:", err);
+          });
+      };
+
+      useEffect(() => {
+        // 1. load foods from backend API
+        fetch(`${API_BASE}/api/foods`)
+          .then(res => res.json())
+          .then(data => {
+            if (Array.isArray(data) && data.length > 0) {
+              console.log("Foods loaded from Express backend!");
+              setFoodList(data);
+            }
+          })
+          .catch(err => {
+            console.log("Backend offline, using local backup foods list");
+          });
+
+        // 2. load existing orders for admin
+        loadBackendOrders();
+      }, []);
+
+      // 1. CUSTOMER LOGIN FUNCTION
+      const handleCustomerLogin = () => {
+        if (email.trim() === "" || password.trim() === "") {
+          alert("Please enter customer Email and Password!");
+          return;
+        }
+
+        fetch(`${API_BASE}/api/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.name) {
+              setUserName(data.name);
+            } else {
+              setUserName(email.split("@")[0]);
+            }
+            setPage("home");
+          })
+          .catch(() => {
+            const namePart = email.includes("@") ? email.split("@")[0] : email;
+            setUserName(namePart);
+            setPage("home");
+          });
+      };
+
+      // 2. SEPARATE ADMIN LOGIN FUNCTION
+      const handleAdminLogin = () => {
+        if (adminUser.trim() === "" || adminPass.trim() === "") {
+          alert("Please enter Admin Username and Password!");
+          return;
+        }
+
+        fetch(`${API_BASE}/api/admin/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: adminUser.trim(), password: adminPass.trim() })
+        })
+          .then(res => {
+            if (res.ok) return res.json();
+            throw new Error("Invalid credentials");
+          })
+          .then(data => {
+            setIsAdmin(true);
+            setPage("admin");
+            loadBackendOrders();
+          })
+          .catch(() => {
+            if (adminUser.trim() === "admin" && adminPass.trim() === "admin123") {
+              setIsAdmin(true);
+              setPage("admin");
+              loadBackendOrders();
+            } else {
+              alert("Invalid Admin Credentials!\n\nCorrect demo login:\nUsername: admin\nPassword: admin123");
+            }
+          });
+      };
+
+      // cart functions
+      const addToCart = (item) => {
+        setCart([...cart, item]);
+      };
+
+      const removeItem = (index) => {
+        const updated = [...cart];
+        updated.splice(index, 1);
+        setCart(updated);
+      };
+
+      let total = 0;
+      cart.forEach(item => {
+        total = total + item.price;
+      });
+      let deliveryFee = cart.length > 0 ? 30 : 0;
+      let grandTotal = total + deliveryFee;
+
+      // Filter foods by both search text AND selected category
+      const filteredFoods = foodList.filter(food => {
+        const matchesSearch = food.name.toLowerCase().includes(search.toLowerCase());
+        const matchesCategory = selectedCategory === "All" || food.category === selectedCategory;
+        return matchesSearch && matchesCategory;
+      });
+
+      // place order and send to backend
+      const placeOrder = () => {
+        if (custName.trim() === "" || phone.trim() === "" || address.trim() === "") {
+          alert("Full Name, Phone Number, and Address are required!");
+          return;
+        }
+
+        if (phone.trim().length !== 10) {
+          alert("Please enter a valid 10-digit Phone Number!");
+          return;
+        }
+
+        const fallbackId = "ORD" + Math.floor(1000 + Math.random() * 9000);
+        const newOrderObj = {
+          orderId: fallbackId,
+          custName,
+          phone,
+          address,
+          pincode,
+          payment,
+          cart: [...cart],
+          total,
+          deliveryFee,
+          grandTotal,
+          status: "Pending",
+          date: new Date().toLocaleString()
+        };
+
+        fetch(`${API_BASE}/api/orders`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            custName,
+            phone,
+            address,
+            pincode,
+            payment,
+            cart,
+            total,
+            deliveryFee,
+            grandTotal
+          })
+        })
+          .then(res => res.json())
+          .then(data => {
+            const confirmedId = data.orderId || fallbackId;
+            newOrderObj.orderId = confirmedId;
+            setOrderId(confirmedId);
+            setAdminOrders(prev => [newOrderObj, ...prev]);
+            setPage("success");
+          })
+          .catch(err => {
+            console.log("Backend offline, saving order locally:", err);
+            setOrderId(fallbackId);
+            setAdminOrders(prev => [newOrderObj, ...prev]);
+            setPage("success");
+          });
+      };
+
+      // admin toggle order status (Pending <-> Delivered)
+      const toggleOrderStatus = (orderIdToToggle, currentStatus) => {
+        const nextStatus = currentStatus === "Pending" ? "Delivered" : "Pending";
+
+        setAdminOrders(prev =>
+          prev.map(ord => ord.orderId === orderIdToToggle ? { ...ord, status: nextStatus } : ord)
+        );
+
+        fetch(`${API_BASE}/api/orders/status`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderId: orderIdToToggle, status: nextStatus })
+        }).catch(err => {
+          console.log("Backend offline, status updated in local UI:", err);
+        });
+      };
+
+      // ------------------------------------------------------------
+      // 1. CUSTOMER LOGIN PAGE VIEW
+      // ------------------------------------------------------------
+      if (page === "login") {
+        return (
+          <div className="login-page">
+            <div className="login-box">
+              <h1>Food<span>ie.</span></h1>
+              <p>Customer Login to order food</p>
+
+              <input
+                type="text"
+                placeholder="Customer Email / Username"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <button className="customer-login-btn" onClick={handleCustomerLogin}>
+                Login as Customer
+              </button>
+
+              <p className="small-hint">Any email & password works for customer demo</p>
+
+              <div className="login-divider">
+                <span>ADMIN ACCESS</span>
+              </div>
+
+              <button
+                className="switch-login-btn"
+                onClick={() => {
+                  setAdminUser("");
+                  setAdminPass("");
+                  setPage("admin-login");
+                }}
+              >
+                Go to Admin Login 🔒
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      // ------------------------------------------------------------
+      // 2. SEPARATE ADMIN LOGIN PAGE VIEW
+      // ------------------------------------------------------------
+      if (page === "admin-login") {
+        return (
+          <div className="login-page">
+            <div className="admin-login-box">
+              <div className="admin-login-icon">🔐</div>
+              <h1>Admin Portal</h1>
+              <div className="admin-tag-badge">STAFF & RESTAURANT ADMIN ONLY</div>
+              <p style={{ color: "#666", fontSize: "13px", marginBottom: "18px" }}>
+                Enter authorized admin credentials to manage live food orders
+              </p>
+
+              <input
+                type="text"
+                placeholder="Admin Username (admin)"
+                value={adminUser}
+                onChange={(e) => setAdminUser(e.target.value)}
+              />
+
+              <input
+                type="password"
+                placeholder="Admin Password (admin123)"
+                value={adminPass}
+                onChange={(e) => setAdminPass(e.target.value)}
+              />
+
+              <button className="admin-submit-btn" onClick={handleAdminLogin}>
+                Sign In to Dashboard →
+              </button>
+
+              <div style={{ background: "#f8f9fa", padding: "10px", borderRadius: "6px", margin: "15px 0", fontSize: "12px", color: "#555" }}>
+                Demo Admin Credentials:<br/>
+                Username: <b>admin</b> | Password: <b>admin123</b>
+              </div>
+
+              <a
+                className="back-to-customer-link"
+                onClick={() => setPage("login")}
+              >
+                ← Back to Customer Login
+              </a>
+            </div>
+          </div>
+        );
+      }
+
+      // ------------------------------------------------------------
+      // 3. CHECKOUT / ADDRESS PAGE VIEW (With Payment QR)
+      // ------------------------------------------------------------
+      if (page === "checkout") {
+        return (
+          <div>
+            <header className="checkout-header">
+              <div className="logo" onClick={() => setPage("home")}>Food<span>ie.</span></div>
+              <button className="back-link-btn" onClick={() => setPage("home")}>
+                ← Back to Menu
+              </button>
+            </header>
+
+            <div className="checkout-wrap">
+              {/* Left column: Address form */}
+              <div className="checkout-box">
+                <h2>Delivery Address 📍</h2>
+                <p className="subtitle">Please provide accurate delivery details</p>
+
+                <div className="form-group">
+                  <label>Full Name</label>
+                  <input
+                    type="text"
+                    placeholder="Ex: Kavi Kumar"
+                    value={custName}
+                    onChange={(e) => setCustName(e.target.value)}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Phone Number (10 digits)</label>
+                  <input
+                    type="text"
+                    maxLength="10"
+                    placeholder="Ex: 9876543210"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Full Address</label>
+                  <textarea
+                    rows="3"
+                    placeholder="Room / House No, Street, Landmark, Area"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  ></textarea>
+                </div>
+
+                <div className="form-group">
+                  <label>Pincode</label>
+                  <input
+                    type="text"
+                    placeholder="Ex: 641004"
+                    value={pincode}
+                    onChange={(e) => setPincode(e.target.value)}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Payment Method</label>
+                  <select value={payment} onChange={(e) => setPayment(e.target.value)}>
+                    <option value="Cash on Delivery">Cash on Delivery</option>
+                    <option value="UPI">UPI (Google Pay / PhonePe / Paytm QR)</option>
+                    <option value="Card">Debit / Credit Card</option>
+                  </select>
+                </div>
+
+                {/* UPI QR CODE DISPLAY BOX */}
+                {payment === "UPI" && (
+                  <div className="qr-container">
+                    <div className="qr-title">📱 Scan UPI QR Code to Pay</div>
+                    <img
+                      className="qr-img"
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=foodie@oksbi%26pn=Foodie%20Delivery%26am=${grandTotal}%26cu=INR`}
+                      alt="UPI QR Code"
+                    />
+                    <div className="upi-id-badge">UPI ID: foodie@oksbi</div>
+                    <div style={{ fontWeight: "bold", fontSize: "14px", color: "#333", marginTop: "4px" }}>
+                      Amount to Pay: Rs. {grandTotal}
+                    </div>
+                    <div className="upi-apps-text">Google Pay • PhonePe • Paytm • Any UPI App</div>
+                    <div className="qr-success-note">✓ QR Ready. Scan and click Confirm Order below!</div>
+                  </div>
+                )}
+
+                <div className="bill-box">
+                  <p>Items Subtotal: Rs. {total}</p>
+                  <p>Delivery Fee: Rs. {deliveryFee}</p>
+                  <h3>Grand Total: Rs. {grandTotal}</h3>
+                </div>
+
+                <button className="confirm-btn" onClick={placeOrder}>
+                  Confirm Order - Rs. {grandTotal}
+                </button>
+              </div>
+
+              {/* Right column: Order item summary */}
+              <div className="checkout-items">
+                <h3>Order Summary ({cart.length} items)</h3>
+                {cart.map((item, index) => (
+                  <div className="mini-item" key={index}>
+                    <span>{item.name}</span>
+                    <span><b>Rs. {item.price}</b></span>
+                  </div>
+                ))}
+                <div style={{ marginTop: "15px", paddingTop: "10px", borderTop: "1px dashed #ccc", fontSize: "14px" }}>
+                  <p>Delivery charge: Rs. {deliveryFee}</p>
+                  <p style={{ marginTop: "6px", fontWeight: "bold" }}>Total: Rs. {grandTotal}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // ------------------------------------------------------------
+      // 4. ORDER COMPLETED PAGE VIEW
+      // ------------------------------------------------------------
+      if (page === "success") {
+        return (
+          <div className="success-page">
+            <div className="success-box">
+              <div className="tick">✓</div>
+              <h1>Order Completed!</h1>
+              <p className="thank-you">Thank you <b>{custName}</b>, your order is confirmed.</p>
+
+              <div className="order-details">
+                <p><b>Order ID:</b> {orderId}</p>
+                <p><b>Deliver to:</b> {address} {pincode ? `(${pincode})` : ""}</p>
+                <p><b>Phone:</b> {phone}</p>
+                <p><b>Payment Mode:</b> {payment === "UPI" ? "UPI (QR Paid)" : payment}</p>
+                <p><b>Total Paid:</b> Rs. {grandTotal}</p>
+                <p><b>Estimated Time:</b> 30 - 40 mins 🛵</p>
+              </div>
+
+              <div className="action-buttons">
+                <button
+                  className="order-more-btn"
+                  onClick={() => {
+                    setCart([]);
+                    setPage("home");
+                  }}
+                >
+                  Order More Food
+                </button>
+                <button
+                  className="back-home-btn"
+                  onClick={() => {
+                    setCart([]);
+                    setPage("home");
+                  }}
+                >
+                  Back to Home
+                </button>
+                <button
+                  className="status-btn"
+                  style={{ padding: "10px", marginTop: "5px" }}
+                  onClick={() => {
+                    if (isAdmin) {
+                      setPage("admin");
+                      loadBackendOrders();
+                    } else {
+                      setPage("admin-login");
+                    }
+                  }}
+                >
+                  Go to Admin Login to View Orders 🔐
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // ------------------------------------------------------------
+      // 5. ADMIN DASHBOARD PAGE VIEW
+      // ------------------------------------------------------------
+      if (page === "admin") {
+        const totalOrdersCount = adminOrders.length;
+        let totalRevenue = 0;
+        let pendingCount = 0;
+        let deliveredCount = 0;
+
+        adminOrders.forEach(o => {
+          totalRevenue += Number(o.grandTotal || 0);
+          if (o.status === "Delivered") {
+            deliveredCount++;
+          } else {
+            pendingCount++;
+          }
+        });
+
+        return (
+          <div>
+            {/* Admin Navigation Bar */}
+            <header className="admin-navbar">
+              <div className="logo" onClick={() => setPage("home")}>
+                Food<span>ie.</span> <span className="admin-badge">ADMIN</span>
+              </div>
+              <nav>
+                <a href="#store" className="admin-nav-link" onClick={(e) => { e.preventDefault(); setPage("home"); }}>
+                  ← Store Menu
+                </a>
+                <button
+                  className="logout-btn"
+                  onClick={() => {
+                    setIsAdmin(false);
+                    setAdminUser("");
+                    setAdminPass("");
+                    setPage("admin-login");
+                  }}
+                >
+                  Admin Logout
+                </button>
+              </nav>
+            </header>
+
+            <div className="admin-container">
+              <div className="admin-header-row">
+                <div>
+                  <h2>Admin Orders Dashboard 📊</h2>
+                  <p style={{ color: "gray", fontSize: "14px", marginTop: "4px" }}>
+                    Logged in as <b>Administrator</b> | Live customer orders
+                  </p>
+                </div>
+                <button className="refresh-orders-btn" onClick={loadBackendOrders}>
+                  🔄 Refresh Orders
+                </button>
+              </div>
+
+              {/* Quick Stats Grid */}
+              <div className="admin-stats-grid">
+                <div className="stat-card">
+                  <p>Total Orders</p>
+                  <h2>{totalOrdersCount}</h2>
+                </div>
+                <div className="stat-card revenue">
+                  <p>Total Revenue</p>
+                  <h2>Rs. {totalRevenue}</h2>
+                </div>
+                <div className="stat-card pending">
+                  <p>Pending Delivery</p>
+                  <h2>{pendingCount}</h2>
+                </div>
+                <div className="stat-card delivered">
+                  <p>Delivered Orders</p>
+                  <h2>{deliveredCount}</h2>
+                </div>
+              </div>
+
+              {/* Orders Table */}
+              <div className="admin-table-card">
+                <div className="admin-table-header">
+                  <h3>Customer Orders ({totalOrdersCount})</h3>
+                </div>
+
+                {adminOrders.length === 0 ? (
+                  <div className="empty-orders-note">
+                    <p>No orders recorded yet!</p>
+                    <p style={{ fontSize: "13px", marginTop: "6px" }}>
+                      Go to the store, add dishes to cart, and place an order to see it live here.
+                    </p>
+                  </div>
+                ) : (
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Address</th>
+                        <th>Items</th>
+                        <th>Payment</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {adminOrders.map((ord, idx) => {
+                        const currentStatus = ord.status || "Pending";
+                        return (
+                          <tr key={idx}>
+                            <td><b>{ord.orderId}</b><br/><small style={{ color: "#888" }}>{ord.date}</small></td>
+                            <td>
+                              <b>{ord.custName}</b><br/>
+                              <small style={{ color: "#555" }}>📞 {ord.phone}</small>
+                            </td>
+                            <td style={{ maxWidth: "200px" }}>
+                              {ord.address} {ord.pincode ? `(${ord.pincode})` : ""}
+                            </td>
+                            <td>
+                              {Array.isArray(ord.cart) ? (
+                                ord.cart.map((c, i) => (
+                                  <div key={i} style={{ fontSize: "12px" }}>• {c.name} (Rs.{c.price})</div>
+                                ))
+                              ) : "Items"}
+                            </td>
+                            <td>
+                              <span style={{ fontSize: "12px", background: "#f1f1f1", padding: "3px 8px", borderRadius: "4px" }}>
+                                {ord.payment}
+                              </span>
+                            </td>
+                            <td><b>Rs. {ord.grandTotal}</b></td>
+                            <td>
+                              <span className={`status-badge ${currentStatus === "Delivered" ? "status-delivered" : "status-pending"}`}>
+                                {currentStatus}
+                              </span>
+                            </td>
+                            <td>
+                              <button
+                                className="status-btn"
+                                onClick={() => toggleOrderStatus(ord.orderId, currentStatus)}
+                              >
+                                Mark {currentStatus === "Pending" ? "Delivered ✓" : "Pending ⏳"}
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // ------------------------------------------------------------
+      // 6. CUSTOMER HOME PAGE VIEW (With 18 Items & Category Filtering)
+      // ------------------------------------------------------------
+      const categoriesList = ["All", "Biryani", "Fast Food", "South Indian", "Meals", "Chinese", "Desserts", "Beverages"];
+
+      return (
+        <div>
+          {/* Navigation Header */}
+          <header>
+            <div className="logo" onClick={() => setPage("home")}>Food<span>ie.</span></div>
+            <nav>
+              <a href="#home">Hi, {userName || "Food Lover"}</a>
+              <a href="#cart" className="cart-link">Cart ({cart.length})</a>
+              <a
+                href="#admin"
+                className="admin-nav-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (isAdmin) {
+                    setPage("admin");
+                    loadBackendOrders();
+                  } else {
+                    setPage("admin-login");
+                  }
+                }}
+              >
+                Admin Login 🔒
+              </a>
+              <button className="logout-btn" onClick={() => setPage("login")}>Logout</button>
+            </nav>
+          </header>
+
+          {/* Search Input Box */}
+          <div className="search-container">
+            <div className="search-box">
+              <input
+                type="text"
+                placeholder="Search for Biryani, Pizza, Noodles, Dosa, Cake..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <button>Search</button>
+            </div>
+          </div>
+
+          {/* 50% Offer Banner */}
+          <div className="banner">
+            <div>
+              <h2>Hungry? Order Now!</h2>
+              <p>Get 50% OFF on your favourite college meals & desserts today</p>
+            </div>
+            <div className="offer-tag">🍕 50% OFF</div>
+          </div>
+
+          {/* Category Filter Pills */}
+          <div className="category-filters">
+            {categoriesList.map((cat) => (
+              <button
+                key={cat}
+                className={`category-chip ${selectedCategory === cat ? "active" : ""}`}
+                onClick={() => setSelectedCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Food Cards Grid */}
+          <h3 className="section-title">
+            {selectedCategory === "All" ? "Full Restaurant Menu" : `${selectedCategory} Dishes`} ({filteredFoods.length} items)
+          </h3>
+
+          <div className="food-grid">
+            {filteredFoods.map((food) => (
+              <div className="card" key={food.id}>
+                <img src={food.img} alt={food.name} />
+                <div className="card-body">
+                  <span className="badge-category">{food.category}</span>
+                  <h3>{food.name}</h3>
+                  <p className="card-meta">⭐ {food.rating} • ⏱️ {food.time} • Fresh & Hot</p>
+                  <div className="price-row">
+                    <span className="price">Rs. {food.price}</span>
+                    <button className="add-btn" onClick={() => addToCart(food)}>
+                      ADD +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom Cart Box */}
+          <div className="cart-box" id="cart">
+            <h2>Your Cart 🛒</h2>
+            {cart.length === 0 ? (
+              <p className="cart-empty-text">Your cart is empty. Add delicious items above to order!</p>
+            ) : (
+              <div>
+                {cart.map((item, index) => (
+                  <div className="cart-item" key={index}>
+                    <span>{item.name} - <b>Rs. {item.price}</b></span>
+                    <button className="remove-btn" onClick={() => removeItem(index)}>
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <div className="cart-total-row">
+                  Items Total: Rs. {total} + Delivery Fee: Rs. {deliveryFee} = <span style={{ color: "#ff4d2d" }}>Rs. {grandTotal}</span>
+                </div>
+                <button className="place-order-btn" onClick={() => setPage("checkout")}>
+                  Place Order →
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Simple Footer */}
+          <footer>
+            <p>Foodie Delivery System © 2026 | College Mini Project</p>
+          </footer>
+        </div>
+      );
+    }
+
+    // Render React App inside div#root
+    const rootElement = document.getElementById("root");
+    ReactDOM.createRoot(rootElement).render(<App />);
+  </script>
+
+</body>
+</html>

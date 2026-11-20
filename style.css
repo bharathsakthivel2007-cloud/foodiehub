@@ -1,0 +1,1042 @@
+/* style.css - Online Food Delivery System */
+/* College mini project - 2nd year student style */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f7f7f7;
+  color: #333;
+}
+
+/* ---------------- CUSTOMER LOGIN PAGE CSS ---------------- */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f2f5f8;
+  padding: 15px;
+}
+
+.login-box {
+  background: #ffffff;
+  width: 340px;
+  padding: 30px 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.login-box h1 {
+  font-size: 32px;
+  color: #0a3d62;
+  margin-bottom: 6px;
+}
+
+.login-box h1 span {
+  color: #ff4d2d;
+}
+
+.login-box p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 11px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.login-box input:focus {
+  border-color: #ff4d2d;
+}
+
+.login-box button.customer-login-btn {
+  width: 100%;
+  padding: 11px;
+  background-color: #ff4d2d;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: 0.2s;
+}
+
+.login-box button.customer-login-btn:hover {
+  background-color: #e03b1d;
+}
+
+.login-divider {
+  margin: 18px 0 12px 0;
+  border-top: 1px solid #eee;
+  position: relative;
+}
+
+.login-divider span {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 0 10px;
+  font-size: 11px;
+  color: #999;
+}
+
+.switch-login-btn {
+  background: #eef2f7;
+  color: #0a3d62;
+  border: 1px solid #ccd6e0;
+  padding: 9px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.2s;
+}
+
+.switch-login-btn:hover {
+  background: #dfe6ee;
+}
+
+.login-box .small-hint {
+  font-size: 12px;
+  color: #888;
+  margin-top: 14px;
+  margin-bottom: 0;
+}
+
+/* ---------------- SEPARATE ADMIN LOGIN PAGE CSS ---------------- */
+.admin-login-box {
+  background: #ffffff;
+  width: 350px;
+  padding: 32px 26px;
+  border-radius: 12px;
+  border-top: 5px solid #0a3d62;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.admin-login-icon {
+  width: 60px;
+  height: 60px;
+  background: #0a3d62;
+  color: white;
+  font-size: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px auto;
+}
+
+.admin-login-box h1 {
+  font-size: 24px;
+  color: #0a3d62;
+  margin-bottom: 4px;
+}
+
+.admin-tag-badge {
+  display: inline-block;
+  background: #f6b93b;
+  color: #0a3d62;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.admin-login-box input {
+  width: 100%;
+  padding: 11px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.admin-login-box input:focus {
+  border-color: #0a3d62;
+}
+
+.admin-login-box button.admin-submit-btn {
+  width: 100%;
+  padding: 11px;
+  background-color: #0a3d62;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: 0.2s;
+}
+
+.admin-login-box button.admin-submit-btn:hover {
+  background-color: #062842;
+}
+
+.back-to-customer-link {
+  display: inline-block;
+  margin-top: 15px;
+  color: #ff4d2d;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.back-to-customer-link:hover {
+  text-decoration: underline;
+}
+
+/* ---------------- HEADER & NAVBAR ---------------- */
+header {
+  background-color: #0a3d62;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+}
+
+.logo span {
+  color: #ff4d2d;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+nav .cart-link {
+  background: #ff4d2d;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: bold;
+}
+
+nav .admin-nav-link {
+  background: #f6b93b;
+  color: #0a3d62 !important;
+  font-weight: bold !important;
+  padding: 6px 12px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+nav .logout-btn {
+  background: transparent;
+  color: #ffcccc;
+  border: 1px solid #ffcccc;
+  padding: 5px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+nav .logout-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------------- SEARCH BAR & OFFER BANNER ---------------- */
+.search-container {
+  display: flex;
+  justify-content: center;
+  padding: 22px 20px 10px 20px;
+}
+
+.search-box {
+  display: flex;
+  width: 100%;
+  max-width: 650px;
+  gap: 8px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.search-box button {
+  background-color: #ff4d2d;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.banner {
+  background: linear-gradient(135deg, #0a3d62, #1e5f8a);
+  color: white;
+  margin: 15px 30px 25px 30px;
+  padding: 25px 30px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(10, 61, 98, 0.2);
+}
+
+.banner h2 {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.banner p {
+  color: #d1e3f0;
+  font-size: 15px;
+}
+
+.banner .offer-tag {
+  background: #ff4d2d;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+/* ---------------- FOOD ITEMS GRID & CATEGORIES ---------------- */
+.category-filters {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 0 30px 18px 30px;
+  scrollbar-width: none;
+}
+
+.category-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.category-chip {
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.2s;
+}
+
+.category-chip:hover {
+  border-color: #ff4d2d;
+  color: #ff4d2d;
+}
+
+.category-chip.active {
+  background: #ff4d2d;
+  color: white;
+  border-color: #ff4d2d;
+}
+
+.badge-category {
+  display: inline-block;
+  background: #eef2f7;
+  color: #0a3d62;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  width: fit-content;
+}
+
+.section-title {
+  padding: 0 30px;
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #222;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  padding: 0 30px 30px 30px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-body h3 {
+  font-size: 18px;
+  margin-bottom: 6px;
+  color: #111;
+}
+
+.card-meta {
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #222;
+}
+
+.add-btn {
+  background: #ff4d2d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.add-btn:hover {
+  background: #e03b1d;
+}
+
+/* ---------------- BOTTOM CART BOX ---------------- */
+.cart-box {
+  background: white;
+  margin: 0 30px 35px 30px;
+  padding: 22px;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  border-left: 5px solid #ff4d2d;
+}
+
+.cart-box h2 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.cart-empty-text {
+  color: #888;
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+}
+
+.remove-btn {
+  color: #d63031;
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 4px 8px;
+}
+
+.remove-btn:hover {
+  text-decoration: underline;
+}
+
+.cart-total-row {
+  margin-top: 18px;
+  padding-top: 10px;
+  border-top: 1px dashed #ccc;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.place-order-btn {
+  background-color: #ff4d2d;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 14px;
+}
+
+.place-order-btn:hover {
+  background: #e03b1d;
+}
+
+/* ---------------- CHECKOUT PAGE CSS ---------------- */
+.checkout-header {
+  background: #0a3d62;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-link-btn {
+  background: white;
+  color: #0a3d62;
+  border: none;
+  padding: 7px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 2-column flex layout for checkout */
+.checkout-wrap {
+  display: flex;
+  gap: 25px;
+  padding: 25px 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.checkout-box {
+  flex: 2;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-box h2 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.checkout-box p.subtitle {
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #ff4d2d;
+}
+
+/* ---------------- PAYMENT QR CODE CSS ---------------- */
+.qr-container {
+  background: #fdfdfd;
+  border: 2px dashed #ff4d2d;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.qr-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #0a3d62;
+  margin-bottom: 8px;
+}
+
+.qr-img {
+  width: 160px;
+  height: 160px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 6px;
+  background: white;
+  margin: 6px auto;
+  display: block;
+}
+
+.upi-id-badge {
+  display: inline-block;
+  background: #eef2f7;
+  color: #0a3d62;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 15px;
+  margin: 6px 0;
+}
+
+.upi-apps-text {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.qr-success-note {
+  font-size: 12px;
+  color: #27ae60;
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+.bill-box {
+  background: #fff5f3;
+  border: 1px solid #ffdcd6;
+  padding: 14px;
+  border-radius: 8px;
+  margin: 18px 0;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.bill-box h3 {
+  color: #d63031;
+  margin-top: 6px;
+  font-size: 16px;
+}
+
+.confirm-btn {
+  width: 100%;
+  padding: 13px;
+  background: #ff4d2d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.confirm-btn:hover {
+  background: #e03b1d;
+}
+
+.checkout-items {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-items h3 {
+  font-size: 16px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.mini-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 14px;
+}
+
+/* ---------------- ORDER COMPLETED PAGE CSS ---------------- */
+.success-page {
+  background: #f4f7f6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.success-box {
+  background: white;
+  padding: 35px 28px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+}
+
+.tick {
+  width: 65px;
+  height: 65px;
+  background: #27ae60;
+  color: white;
+  font-size: 34px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px auto;
+}
+
+.success-box h1 {
+  font-size: 24px;
+  color: #27ae60;
+  margin-bottom: 6px;
+}
+
+.success-box p.thank-you {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.order-details {
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  text-align: left;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.order-details p b {
+  color: #333;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.order-more-btn {
+  width: 100%;
+  padding: 12px;
+  background: #ff4d2d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.back-home-btn {
+  width: 100%;
+  padding: 12px;
+  background: white;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.back-home-btn:hover {
+  background: #f7f7f7;
+}
+
+/* ---------------- ADMIN DASHBOARD CSS ---------------- */
+.admin-navbar {
+  background-color: #0a3d62;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.admin-badge {
+  background: #ff4d2d;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.admin-container {
+  max-width: 1150px;
+  margin: 25px auto;
+  padding: 0 25px;
+}
+
+.admin-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-left: 5px solid #0a3d62;
+}
+
+.stat-card.revenue { border-left-color: #27ae60; }
+.stat-card.pending { border-left-color: #e67e22; }
+.stat-card.delivered { border-left-color: #2980b9; }
+
+.stat-card p {
+  color: #777;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.stat-card h2 {
+  font-size: 26px;
+  margin-top: 6px;
+  color: #222;
+}
+
+.admin-table-card {
+  background: white;
+  padding: 22px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow-x: auto;
+  margin-bottom: 30px;
+}
+
+.admin-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-table-header h3 {
+  font-size: 18px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-table th {
+  background: #f8f9fa;
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 2px solid #e9ecef;
+  color: #495057;
+  font-weight: bold;
+}
+
+.admin-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.status-delivered {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.status-btn {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #0a3d62;
+  background: white;
+  color: #0a3d62;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: 0.2s;
+}
+
+.status-btn:hover {
+  background: #0a3d62;
+  color: white;
+}
+
+.refresh-orders-btn {
+  background: #f8f9fa;
+  border: 1px solid #ced4da;
+  padding: 7px 15px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.refresh-orders-btn:hover {
+  background: #e9ecef;
+}
+
+.empty-orders-note {
+  text-align: center;
+  padding: 35px 20px;
+  color: #777;
+}
+
+/* ---------------- FOOTER ---------------- */
+footer {
+  background: #0a3d62;
+  color: #cbd5e1;
+  text-align: center;
+  padding: 18px;
+  font-size: 13px;
+  margin-top: 30px;
+}
+
+/* ---------------- MOBILE RESPONSIVE ---------------- */
+@media (max-width: 700px) {
+  header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .banner {
+    flex-direction: column;
+    gap: 15px;
+    margin: 15px;
+    text-align: center;
+  }
+  
+  .banner .offer-tag {
+    font-size: 18px;
+  }
+  
+  .food-grid {
+    grid-template-columns: 1fr;
+    padding: 0 15px 20px 15px;
+  }
+
+  .cart-box {
+    margin: 0 15px 25px 15px;
+  }
+
+  .checkout-wrap {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .admin-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
